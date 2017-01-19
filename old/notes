@@ -1,0 +1,27 @@
+express = model mvc
+
+Model Vue Controlleur
+
+vue = ce qui est affiché, html,
+controlleur = permet de changer d'url pour aller d'une page à l'autre (routeur)
+Model = que des fonctions
+
+
+express à un Express Generator
+npm install express-generator -g
+                              -g installe sur l'ordinateur du developppeur
+
+hbs handlebars
+
+
+
+
+JSON = organiser
+
+notation objet :
+que avec des virgules, sauf à la dernioère propriété
+
+res.render = resource render = creer le render
+
+
+router = declare une route

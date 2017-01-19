@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="theme.css">
+</head>
+	<body>
+		<script langage="Javascript" class="js">
+		function dessinerVoyant (index,couleur){
+			var voyant=document.getElementById('voyant'+index);
+			var context=voyant.getContext('2d');
+
+			var centerX=voyant.width/2;
+			var centerY=voyant.height/2;
+
+			context.beginPath();
+			context.arc(centerX, centerY, radius, 0, 2*Math.PI, false);
+			context.fillStyle=couleur;
+			context.fill();
+			context.lineWidth=5;
+			context.strokeStyle='#003300';
+			context.stroke();
+		}
+
+		function dessinerBP(index, couleur){
+			var voyant=document.getElementById('BP'+index);
+			var context=voyant.getContext('2d');
+
+			var centerX=voyant.width/2;
+			var centerY=voyant.height/2;
+			var radius=30;
+
+			context.beginPath();
+			context.arc(centerX, centerY, radius, 0, 2*Math.PI, false);
+			context.fillStyle=couleur;
+			context.fill();
+			context.lineWidth=5;
+			context.strokeStyle='#003300';
+			context.stroke();
+		}
+
+		function init(){
+			indexBP=1;
+			for (ind=0; ind<6; ind++){
+				dessinerVoyant(ind,'#808080');
+				dessinerBP(indexBP, '#808080');
+				indexBP*=2;
+			}
+		}
+		</script>
+
+		Ceci est la page 2 <br><br>
+		<table>
+			<tr>
+				<td><canvas div id="voyant5" width="100" height="100"></canvas></td>
+				<td><canvas div id="voyant4" width="100" height="100"></canvas></td>
+				<td><canvas div id="voyant3" width="100" height="100"></canvas></td>
+				<td><canvas div id="voyant2" width="100" height="100"></canvas></td>
+				<td><canvas div id="voyant1" width="100" height="100"></canvas></td>
+				<td><canvas div id="voyant0" width="100" height="100"></canvas></td>
+			</tr>
+			<tr>
+				<td><canvas div id="BP32" class="BP" width="100" height="100" data-valeur="32"></canvas></td>
+				<td><canvas div id="BP16" class="BP" width="100" height="100" data-valeur="32"></canvas></td>
+				<td><canvas div id="BP8" class="BP" width="100" height="100" data-valeur="32"></canvas></td>
+				<td><canvas div id="BP4" class="BP" width="100" height="100" data-valeur="32"></canvas></td>
+				<td><canvas div id="BP2" class="BP" width="100" height="100" data-valeur="32"></canvas></td>
+				<td><canvas div id="BP1" class="BP" width="100" height="100" data-valeur="32"></canvas></td>
+			</tr>
+		</table>
+
+		<script language = "Javascript">
+	  	init();
+
+	  	//Lorsqu'on clique sur 1 des boutons, on envoie un "message" au serveur avexc la  valeur du boutons
+	  	//Lorsqu'on relache le BP on envoie la valeur 0
+	  	//Gestion de la class BP
+
+	  	$('.BP') .mousedown(function () {
+	  		var $input = $(this);
+	  		dessinerBP($input.data('valeur'),'#00FF00');
+	  		socket.emit('BP', '0');
+	  		$('#texte').val($input.data('valeur'));
+	  	})
+
+	  	$('.BP').mouseup(function ()  {
+	  		var $input = $(this);
+	  		dessinerBP($input.data('valeur'), '#808080');
+	  		socket.emit('BP', '0');
+	  		$('#texte').val($input.data('valeur'));
+	  	})
+
+	  	//On affiche une boite de dialogue quand le serveur nous envoie un "message"
+
+	  	socket.on('led', function(valeur) {
+	  		$('#texte').val(valeur);
+	  		console.log(valeur);
+	  		for (ind=0; ind<6; ind++) {
+	  			if (valeur%2==1) dessinerVoyant(ind,'#80FF80');
+	  			else dessinerVoyant (ind,'#808080');
+	  			valeur = Math.floor (valeur/2);
+	  		}
+	  	})
+
+	  	// On affiche une boite de dialogue quand le serveur nous envoie un "message"
+
+	  	socket.on('BP', function(valueur) {
+	  		$('#texte').val(valeur);
+	  		indexBP=1;
+	  		for (ind=0; ind<6; ind++) {
+	  			if (valeur%2==1) dessinerBP(indexBP, '#80FF80');
+	  			else dessinerVoyant (indexBP, '#808080');
+	  			valeur=Math.floor(valeur/2);
+	  			indexBP*=2;
+	  		}
+	  	})
+			var video = iframe.getElementById('video');
+			video.mute();
+		</script>
+	</body>

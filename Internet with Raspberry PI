@@ -1,0 +1,1 @@
+ sudo ./router eth0 wlan0 start

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <link rel="icon" type="image/png" href="Circle-icons-train.svg.png" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="essai.css">
+        <meta charset="utf-8" />
+        <title>Node.js Essais Canvas</title>
+
+
+        <script language = "Javascript">
+                function EnvoyerLogin()  {
+                        var message=$ ('#login').val()+":"+$('#passwd').val();
+                        socket.emit ('login',message);
+                }
+
+                function acceuillir ()  {
+                        var contenu = "<p align=center> Identification </p>" ;
+                        $("#titre") .html (contenu) ;
+                        contenu = "<p align=left>Login : <input type=\"texte\" id=\"login\" placeholder=\"Username\"></INPUT> </p>"  ;
+                        contenu+= "<p align=left>Password : <input type=\"password\" id=\"passwd\" placeholder=\"Password\"></INPUT> </p>"  ;
+                        contenu+= " <p align=center><input type=\"button\" class=\"btn btn-primary btn-lg\" value=\"Valider\" onClick=\"EnvoyerLogin() \"></INPUT> </p> ";
+                        $("#principal").html (contenu) ;
+                        }
+                        function init() {
+                                acceuillir();
+                        }
+                </script>
+         </head>
+
+         <body onload=init() onunload=deconnecter()>
+
+           <!-- <div class="video-background">
+              <div class="video-foreground">
+                <iframe width="1920" height="1080" src="https://www.youtube.com/embed/h_gz5gFczUM?autoplay=1;loop=1;rel=0&amp;controls=0&amp;showinfo=0;playlist=h_gz5gFczUM;frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div> -->
+
+
+           <div class="container">
+             <div class="jumbotron">
+                <table width=100%>
+                        <tr><td width=20%></td><td width=60%><div id="titre"></div></td><td width=20%></td></tr>
+                        <tr><td width=20%></td><td width=60%><div id="principal"></div></td><td width=20%></td></tr>
+                        <tr><td width=20%></td><td width=60%><div id="pied"></div></td><td width=20%></td></tr>
+                </table>
+
+                <script src="http://192.168.10.108/JQuery/jquery-2-1-0.js"></script>
+                <script src="/socket.io/socket.io.js"></script>
+
+                <script>
+                        var socket=io.connect('http://192.168.10.108:8088');
+
+                        //lorsqu'on clique sur les boutons, on envoie un "message" au serveur
+                        //reception des messages du serveur
+                        socket.on('principal', function(value){
+                                $("#principal").html(value);
+                        })
+                </script>
+
+              </div>
+            </div>
+
+            <script
+              src="https://code.jquery.com/jquery-3.1.1.js"
+              integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+              crossorigin="anonymous">
+            </script>
+
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+         </body>
